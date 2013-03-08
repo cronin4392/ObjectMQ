@@ -1,4 +1,3 @@
-
 <?php include 'partials/_head.php'; ?>
 <div class="nav">
 	<div class="logo">Site</div>
