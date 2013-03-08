@@ -1,0 +1,266 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3";
+
+// Base
+/////////////////////////////////////////////
+
+html,
+body {
+	display: block;
+	height: 100%;
+	width: 100%;
+
+	font-family: Helvetica;
+}
+
+img { max-width: 100%; }
+
+h1 {
+	font-size: 3em;
+	text-align: center;
+	margin-bottom: 0.5em;
+}
+
+// Main Nav
+/////////////////////////////////////////////
+
+$navHeight: 45px;
+.nav {
+	@include box-sizing('border-box');
+
+	display: block;
+	width: 100%;
+	height: $navHeight;
+	overflow: hidden;
+
+	padding: 0 20px;
+
+	background-color: orange;
+
+	font-size: 0;
+}
+
+.logo,
+.nav-items,
+.nav-item {
+	@include inline-block();
+	font-size: 14px;
+	line-height: $navHeight;
+}
+
+.logo {
+	font-size: 24px;
+}
+
+.nav-items { float: right; }
+
+// Container
+/////////////////////////////////////////////
+$filterWidth: 240px;
+
+.container {
+	padding: 0 20px;
+	position: relative;
+	margin-top: 20px;
+	overflow: hidden;
+}
+
+.filter-container {
+	width: $filterWidth;
+	background-color: #dddddd;
+
+	position: absolute;
+	top: 0;
+	left: 20px;
+
+	.toggle,
+	.filter {
+		@include box-sizing('border-box');
+		display: block;
+		padding: 7px;
+	}
+
+	.toggle {
+		background-color: orange;
+
+		font-size: 18px;
+	}
+
+	&.closed {
+		.filters { display: none; }
+	}
+}
+
+// Featured Products
+
+.promo-product,
+.featured-products {
+	margin-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.promo-product {
+	.product {
+		width: 100%;
+	}
+}
+
+.featured-products {
+	.wrapper { font-size: 0; }
+	.product {
+		@include inline-block();
+		width: 47.5%;
+		margin-left: 5%;
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+}
+
+// Products
+/////////////////////////////////////////////
+
+.filter-container.closed + .products {
+	padding-left: 0;
+	width: 100%;
+}
+
+.products {
+	@include box-sizing('border-box');
+	font-size: 0;
+
+	width: 100.5%;
+	padding-left: $filterWidth + 20px;
+	margin-top: 32px;
+}
+
+.products-wrapper {
+	display: block;
+}
+
+.product {
+	@include inline-block();
+	@include box-sizing('border-box');
+	margin-bottom: 20px;
+
+	.product-image { text-align: center; }
+
+	.product-info { font-size: 16px; }
+
+	.product-name {
+		font-size: 1.2em;
+	}
+	.product-price {
+		font-size: 0.8em;
+	}
+}
+
+// MQ Code for Products Grid
+
+$productMargin: 10px;
+$productWidth: 240px;
+
+@mixin productsMQ($mqWidth) {
+	$width: $mqWidth;
+	$wrapperWidth: $width+($productMargin*2);
+
+	.products-wrapper {
+		width: percentage( $wrapperWidth / $width);
+		margin-left: percentage( -$productMargin / $width );
+		margin-right: percentage( -$productMargin / $width );
+	}
+
+	.product {
+		width: percentage( ($productWidth) / ($wrapperWidth));
+		margin-left: percentage( $productMargin / $wrapperWidth );
+		margin-right: percentage( $productMargin / $wrapperWidth );
+	}
+}
+
+@mixin productMQ($mqWidth) {
+	// MQ's : 250,500,750
+
+	@if $mqWidth < 501px {
+		
+	}
+
+	@if $mqWidth == 250px {
+		.product-image {
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px solid gray;
+		}
+		.product-info {
+			font-size: 14px;
+		}
+	}
+	@if $mqWidth == 500px {
+		font-size: 0;
+		.product-image {
+			@include box-sizing('border-box');
+			@include inline-block();
+			width: 65%;
+			margin-right: 5%;
+			padding-right: 5%;
+			border-right: 1px solid gray;
+		}
+		.product-info {
+			@include inline-block();
+			width: 30%;
+		}
+	}
+	@if $mqWidth == 750px {
+		.product-info {
+			font-size: 26px;
+		}
+	}
+}
+
+.products {
+
+	&.lt-520 {
+		.products-wrapper {
+			width: 100%;
+		}
+
+		.product {
+			width: 100%;
+		}
+	}
+
+	&.gt-520 {
+		@include productsMQ(520px);
+	}
+
+	&.gt-780 {
+		@include productsMQ(780px);
+	}
+	
+	&.gt-1040 {
+		@include productsMQ(1040px);
+	}
+
+	&.gt-1300 {
+		@include productsMQ(1300px);
+	}
+
+}
+
+.product {
+	&.lt-500 {
+		@include productMQ(250px);
+	}
+	&.gt-500 {
+		@include productMQ(500px);
+	}
+	&.gt-750 {
+		@include productMQ(750px);
+	}
+}
