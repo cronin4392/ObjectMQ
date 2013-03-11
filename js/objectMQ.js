@@ -33,28 +33,6 @@ window.ObjectMQ = {
 		});
 	},
 
-	compareElements: function($first, $second) {
-		var sameClass = false;
-		var sameWidth = false;
-		var sameParent = false;
-
-		if( $first.attr('class') === $second.attr('class') ) {
-			sameClass = true;
-		}
-		if( $first.width() === $second.width() ) {
-			sameWidth = true;
-		}
-		if( $first.parent().is($second.parent()) ) {
-			sameParent = true;
-		}
-		if( sameClass && sameWidth && sameParent ) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	},
-
 	applyMQ: function() {
 		var _this = this;
 
@@ -111,15 +89,48 @@ window.ObjectMQ = {
 		});
 	},
 
+	/*
+	** Create Array from a string
+	*/
 	parseMQTriggers: function(string) {
 		var array = string.split(',');
 		return array;
 	},
+
+	/*
+	** Takes an array and returns on without any duplicated and numerically ASC
+	*/
 	arrayUnique: function(array) {
 		var uniqueArr = [];
 		$.each(array, function(i, el){
 			if($.inArray(el, uniqueArr) === -1) uniqueArr.push(el);
 		});
 		return uniqueArr.sort(function(a,b){return a-b});
+	},
+
+	/*
+	** Takes 2 jQuery objects and compares them
+	** If they have the same class, width and parent they are deemed the same
+	*/
+	compareElements: function($first, $second) {
+		var sameClass = false;
+		var sameWidth = false;
+		var sameParent = false;
+
+		if( $first.attr('class') === $second.attr('class') ) {
+			sameClass = true;
+		}
+		if( $first.width() === $second.width() ) {
+			sameWidth = true;
+		}
+		if( $first.parent().is($second.parent()) ) {
+			sameParent = true;
+		}
+		if( sameClass && sameWidth && sameParent ) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
