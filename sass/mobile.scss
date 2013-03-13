@@ -1,0 +1,21 @@
+@media screen and (max-width: 580px) {
+	// general
+	.button {
+		padding: 10px 14px;
+		font-size: 16px;
+	}
+
+	// nav
+	.nav {
+		height: auto;
+		text-align: center;
+	}
+	.nav-items {
+		float: none;
+		display: block;
+	}
+
+	// no filters
+	.filter-container { display: none; }
+	.products { padding-left: 0; }
+}

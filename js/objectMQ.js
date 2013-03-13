@@ -9,6 +9,7 @@ window.ObjectMQ = {
 
 		var $elements = $('body').find('.mq-element-js');
 
+		// Build an object with all MQ elements, their break-points and original classes
 		$elements.each(function(index) {
 			var $object = $(this);
 			var triggers = _this.parseMQTriggers( $object.attr('data-mq-triggers') );
@@ -19,6 +20,8 @@ window.ObjectMQ = {
 				var $prevObj = prevElem.object;
 				sameElem = _this.compareElements( $object, $prevObj );
 			}
+			// If object is the "same" as the previous one just parsed
+			// add it to the previous one
 			if( sameElem ) {
 				$prevObj = $prevObj.add($object);
 				prevElem.object = $prevObj;
@@ -26,7 +29,8 @@ window.ObjectMQ = {
 			else {
 				var object = {
 					'object': $object,
-					'triggers': triggers
+					'triggers': triggers,
+					'originalClass': $object.attr('class')
 				};
 				_this.mqElements.push( object );
 			}
@@ -34,20 +38,20 @@ window.ObjectMQ = {
 	},
 
 	applyMQ: function() {
-		var _this = this;
-
+		var _this = this; 
 		$.each(_this.mqElements, function(index, value) {
 			var object = this;
 			var $object = object.object;
 			var triggers = object.triggers;
 			object.width = $object.width();
 			var width = object.width;
+			var originalClass = object.originalClass;
 
 			var currentLT = object.currentLT;
 			var currentGT = object.currentGT;
 			
-			// if undefined its the first set
-			// if width goes out of bounds, re-set the classes
+			// if currentMQ is unset then set it
+			// if currentMQ is set then only reset if the width has gone out of the bounds
 			if( ( typeof currentLT === "undefined" ) || (object.width < currentGT || object.width > currentLT) ) {
 				var gtClasses = "";
 				var ltClasses = "";
@@ -56,12 +60,14 @@ window.ObjectMQ = {
 
 				// loop through each MQ trigger set on element
 				// and apply appropriate lt&gt classes
+				// note: adjusting class through attr is about 60% faster than with add/removeClass
 				$.each(triggers, function(index, value) {
 					var ltClass = 'lt-'+value;
 					var gtClass = 'gt-'+value;
 					var classes = ltClass+" "+gtClass;
 					
-					$object.removeClass( classes );
+					//$object.removeClass( classes );
+					$object.attr('class', originalClass);
 
 					if( value <= width ) {
 						gtClasses += 'gt-'+value+' ';
@@ -84,7 +90,8 @@ window.ObjectMQ = {
 				if( ltClasses ) {
 					classes += ltClasses;
 				}
-				$object.addClass(classes);
+				//$object.addClass(classes);
+				$object.attr('class', originalClass+" "+classes);
 			}
 		});
 	},

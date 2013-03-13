@@ -16,6 +16,9 @@ body {
 	width: 100%;
 
 	font-family: Helvetica;
+
+	font-size: 16px;
+	line-height: 1.3;
 }
 
 img { max-width: 100%; }
@@ -63,6 +66,18 @@ $navHeight: 45px;
 
 .nav-items { float: right; }
 
+.button {
+	@include inline-block();
+	border: 0;
+	padding: 7px 10px;
+	margin: 7px 0;
+	text-transform: uppercase;
+	font-size: 12px;
+	background: orange;
+	color: white;
+	cursor: pointer;
+}
+
 // Container
 /////////////////////////////////////////////
 $filterWidth: 240px;
@@ -93,6 +108,7 @@ $filterWidth: 240px;
 		background-color: orange;
 
 		font-size: 18px;
+		line-height: 18px;
 	}
 
 	&.closed {
@@ -156,18 +172,14 @@ $filterWidth: 240px;
 
 	.product-image { text-align: center; }
 
-	.product-info { font-size: 16px; }
-
-	.product-name {
-		font-size: 1.2em;
-	}
-	.product-price {
-		font-size: 0.8em;
-	}
+	.product-info,
+	.product-description { font-size: 16px; }
+		.product-name { font-size: 1.2em; }
+		.product-price { font-size: 0.8em; }
 }
 
-// MQ Code for Products Grid
-
+// MQ Code
+//////////////////////////////////////////////////////////////
 $productMargin: 10px;
 $productWidth: 240px;
 
@@ -190,9 +202,8 @@ $productWidth: 240px;
 
 @mixin productMQ($mqWidth) {
 	// MQ's : 250,500,750
-
-	@if $mqWidth < 501px {
-		
+	@if $mqWidth < 750px {
+		.product-description { display: none; }
 	}
 
 	@if $mqWidth == 250px {
@@ -203,40 +214,46 @@ $productWidth: 240px;
 		}
 		.product-info {
 			font-size: 14px;
+			position: relative;
+		}
+		.product-price {
+			position: absolute;
+			top: 0;
+			right: 0;
 		}
 	}
 	@if $mqWidth == 500px {
 		font-size: 0;
-		.product-image {
+		.product-image,
+		.product-meta {
 			@include box-sizing('border-box');
 			@include inline-block();
-			width: 65%;
+		}
+
+		.product-image {
+			width: 55%;
 			margin-right: 5%;
 			padding-right: 5%;
 			border-right: 1px solid gray;
 		}
-		.product-info {
-			@include inline-block();
-			width: 30%;
-		}
+		.product-meta { width: 40%; }
 	}
 	@if $mqWidth == 750px {
-		.product-info {
-			font-size: 26px;
+		.product-info { font-size: 26px; }
+		.product-description { display: block;}
+		.button {
+			font-size: 16px;
+			width: 100%;
+			display: block;
+			padding: 10px 14px;
 		}
 	}
 }
 
 .products {
-
 	&.lt-520 {
-		.products-wrapper {
-			width: 100%;
-		}
-
-		.product {
-			width: 100%;
-		}
+		.products-wrapper { width: 100%; }
+		.product { width: 100%; }
 	}
 
 	&.gt-520 {
