@@ -161,7 +161,8 @@ h1 {
 }
 
 .promo-product,
-.featured-products {
+.featured-products,
+.related-products {
   margin-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
@@ -185,6 +186,24 @@ h1 {
   margin-left: 5%;
 }
 .featured-products .product:first-child {
+  margin-left: 0;
+}
+
+.related-products {
+  position: relative;
+  font-size: 0;
+}
+.related-products .product {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  width: 16.8%;
+  margin-left: 4%;
+}
+.related-products .product:first-child {
   margin-left: 0;
 }
 
@@ -296,6 +315,17 @@ h1 {
   position: absolute;
   top: 0;
   right: 0;
+}
+.product.lt-250 .product-description {
+  display: none;
+}
+.product.lt-250 .product-meta {
+  display: none;
+}
+.product.lt-250 .product-image {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 0;
 }
 .product.gt-500 {
   font-size: 0;

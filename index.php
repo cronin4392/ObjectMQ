@@ -36,5 +36,10 @@
 		</div>
 	</div>
 </div>
+<div class="related-products">
+	<?php for($i=0; $i<5; $i++): ?>
+	<?php include 'partials/product.php'; ?>
+	<?php endfor; ?>
+</div>
 
 <?php include 'partials/_foot.php'; ?>

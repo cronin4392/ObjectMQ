@@ -119,16 +119,15 @@ $filterWidth: 240px;
 // Featured Products
 
 .promo-product,
-.featured-products {
+.featured-products,
+.related-products {
 	margin-top: 20px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
 
 .promo-product {
-	.product {
-		width: 100%;
-	}
+	.product { width: 100%; }
 }
 
 .featured-products {
@@ -138,9 +137,19 @@ $filterWidth: 240px;
 		width: 47.5%;
 		margin-left: 5%;
 
-		&:first-child {
-			margin-left: 0;
-		}
+		&:first-child { margin-left: 0; }
+	}
+}
+
+.related-products {
+	position: relative;
+	font-size: 0;
+	.product {
+		@include inline-block();
+		width: 16.8%;
+		margin-left: 4%;
+
+		&:first-child { margin-left: 0; }
 	}
 }
 
@@ -201,11 +210,18 @@ $productWidth: 240px;
 }
 
 @mixin productMQ($mqWidth) {
-	// MQ's : 250,500,750
+	// MQ's : 175,250,500,750
 	@if $mqWidth < 750px {
 		.product-description { display: none; }
 	}
-
+	@if $mqWidth == 175px {
+		.product-meta { display: none; }
+		.product-image {
+			padding-bottom: 0;
+			margin-bottom: 0;
+			border-bottom: 0;
+		}
+	}
 	@if $mqWidth == 250px {
 		.product-image {
 			margin-bottom: 15px;
@@ -255,7 +271,6 @@ $productWidth: 240px;
 		.products-wrapper { width: 100%; }
 		.product { width: 100%; }
 	}
-
 	&.gt-520 {
 		@include productsMQ(520px);
 	}
@@ -277,6 +292,9 @@ $productWidth: 240px;
 .product {
 	&.lt-500 {
 		@include productMQ(250px);
+	}
+	&.lt-250 {
+		@include productMQ(175px);
 	}
 	&.gt-500 {
 		@include productMQ(500px);
